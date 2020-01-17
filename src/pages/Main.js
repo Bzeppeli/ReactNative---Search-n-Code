@@ -17,7 +17,7 @@ function Main({ navigation }) {
 
             if (granted) {
                 const { coords } = await getCurrentPositionAsync({
-                    enableHighAccuracy: false,
+                    enableHighAccuracy: true,
                 });
 
                 const { latitude, longitude } = coords;
@@ -37,7 +37,7 @@ function Main({ navigation }) {
     async function loadDevs() {
         const { latitude, longitude } = currentRegion;
 
-        const response = api.get('/search', {
+        const response = await api.get('/search', {
             params: {
                 longitude,
                 latitude,
@@ -68,8 +68,8 @@ function Main({ navigation }) {
                     <Marker
                         key={dev._id}
                         coordinate={{
-                            latitude: dev.location.coordinates[1],
                             longitude: dev.location.coordinates[0],
+                            latitude: dev.location.coordinates[1],
                         }}
                     >
                         <Image
